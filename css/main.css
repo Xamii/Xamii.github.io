@@ -1444,7 +1444,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
  * ------------------------------------------------------------------- */
 .header-logo {
     display: inline-block;
-    position: absolute;
+    position: relative;
     margin: 10;
     padding: 0;
     left: 70px;
@@ -1457,15 +1457,24 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 
 .header-logo a img {
     display: inline-block;
-    margin: 9px 0 0 0;
-    padding: 0;
+    margin: 20px 0 0 0;
+    padding-top: 20px;
     outline: 0;
     border: none;
-    width: 80px;
+    width: 130px;
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
 
+.header-logo h1 {
+    color: white;
+    font-size: 1.5em;
+    margin: .7em 0 .3em 0;
+    display: inline-block;
+    position: absolute;
+    top: 63px;
+    white-space: nowrap;
+  }
 
 
 /* ------------------------------------------------------------------- 
@@ -1727,6 +1736,11 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     .header-menu-toggle {
         right: 25px;
     }
+
+    .header-logo h1 {
+        display: none !important;
+
+    }
 }
 
 @media only screen and (max-width: 400px) {
@@ -1793,7 +1807,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 
 .home-content h3 {
     font-family: "montserrat-medium", sans-serif;
-    font-size: 2.5rem;
+    font-size: 2.0rem;
     color: rgba(255, 255, 255, 0.5);
     text-transform: uppercase;
     letter-spacing: .3rem;
