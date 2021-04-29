@@ -1458,7 +1458,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 .header-logo a img {
     display: inline-block;
     margin: 20px 0 0 0;
-    padding-top: 20px;
+    padding-top: 5px;
     outline: 0;
     border: none;
     width: 100px;
@@ -1472,7 +1472,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     margin: .7em 0 .3em 0;
     display: inline-block;
     position: absolute;
-    top: 58px;
+    top: 40px;
     white-space: nowrap;
   }
 
@@ -1655,7 +1655,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 .header-menu-toggle {
     position: fixed;
     right: 38px;
-    top: 24px;
+    top: 40px;
     height: 42px;
     width: 42px;
     line-height: 42px;
