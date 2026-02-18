@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Message Received — Thank You</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Variables ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #080d14;
+      --bg2:      #0d1520;
+      --bg3:      #111d2e;
+      --surface:  #0f1c2e;
+      --border:   rgba(0, 240, 255, 0.12);
+      --cyan:     #00f0ff;
+      --cyan2:    #00b4cc;
+      --text:     #d4e8f0;
+      --text-dim: #6a8fa8;
+      --white:    #ffffff;
+      --font-head: 'Syne', sans-serif;
+      --font-mono: 'Share Tech Mono', monospace;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--cyan); text-decoration: none; transition: color 0.3s ease; }
+    a:hover { color: #fff; }
+
+    /* ── Background ── */
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,240,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,240,255,0.035) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .glow-top {
+      position: absolute;
+      top: -15%;
+      left: -10%;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(0,87,255,0.13) 0%, transparent 65%);
+    }
+
+    .glow-bottom {
+      position: absolute;
+      bottom: -10%;
+      right: -5%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(0,240,255,0.08) 0%, transparent 65%);
+    }
+
+    /* ── Main Layout ── */
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 64px 56px;
+      max-width: 620px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.5), 0 0 60px rgba(0,240,255,0.04);
+      animation: fadeUp 0.7s cubic-bezier(0.4,0,0.2,1) both;
+    }
+
+    /* Top accent line */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    }
+
+    /* Corner decorations */
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,240,255,0.04) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Icon ── */
+    .icon-wrap {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba(0,240,255,0.07);
+      border: 1px solid rgba(0,240,255,0.2);
+      margin-bottom: 32px;
+      position: relative;
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(0,240,255,0.15); }
+      50%       { box-shadow: 0 0 0 16px rgba(0,240,255,0); }
+    }
+
+    .icon-wrap svg {
+      width: 36px;
+      height: 36px;
+      color: var(--cyan);
+      animation: checkDraw 0.6s cubic-bezier(0.4,0,0.2,1) 0.4s both;
+    }
+
+    @keyframes checkDraw {
+      from { opacity: 0; transform: scale(0.5); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    /* ── Text Content ── */
+    .pre-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--cyan);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      opacity: 0;
+      animation: fadeIn 0.5s ease 0.5s forwards;
+    }
+
+    .title {
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeIn 0.5s ease 0.6s forwards;
+    }
+
+    .title span { color: var(--cyan); }
+
+    .body-text {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+      max-width: 420px;
+      margin: 0 auto 40px;
+      opacity: 0;
+      animation: fadeIn 0.5s ease 0.7s forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Info Box ── */
+    .info-box {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 40px;
+      text-align: left;
+      opacity: 0;
+      animation: fadeIn 0.5s ease 0.8s forwards;
+    }
+
+    .info-box p {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+    }
+
+    .info-box p span {
+      color: var(--cyan);
+    }
+
+    /* ── Actions ── */
+    .actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeIn 0.5s ease 0.9s forwards;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      border-radius: 4px;
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--cyan);
+      color: var(--bg);
+    }
+    .btn-primary:hover {
+      background: #fff;
+      color: var(--bg);
+      box-shadow: 0 0 28px rgba(0,240,255,0.35);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--cyan);
+      border: 1.5px solid var(--cyan);
+    }
+    .btn-ghost:hover {
+      background: rgba(0,240,255,0.08);
+      color: #fff;
+      border-color: #fff;
+    }
+
+    /* ── Countdown ── */
+    .countdown-wrap {
+      margin-top: 36px;
+      opacity: 0;
+      animation: fadeIn 0.5s ease 1s forwards;
+    }
+
+    .countdown-text {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+    }
+
+    .countdown-text span {
+      color: var(--cyan);
+      font-size: 0.8rem;
+    }
+
+    /* ── Footer ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 20px 24px;
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 620px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--white);
+    }
+    .footer-brand span { color: var(--cyan); }
+
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .card { padding: 44px 28px; }
+      .actions { flex-direction: column; }
+      .actions .btn { justify-content: center; }
+      .footer-inner { justify-content: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background layers -->
+  <div class="bg-layer">
+    <div class="grid-overlay"></div>
+    <div class="glow-top"></div>
+    <div class="glow-bottom"></div>
+  </div>
+
+  <!-- Main content -->
+  <main>
+    <div class="card">
+
+      <!-- Check icon -->
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+
+      <p class="pre-label">// Message Transmitted</p>
+
+      <h1 class="title">Message<br/><span>Received.</span></h1>
+
+      <p class="body-text">
+        Thank you for reaching out. Your message has been securely delivered and I will respond within <strong style="color: var(--white);">24 hours</strong>.
+      </p>
+
+      <div class="info-box">
+        <p>
+          <span>$</span> status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— <span style="color: #4ade80;">DELIVERED ✓</span><br/>
+          <span>$</span> response_eta &nbsp;— <span>Within 24 hours</span><br/>
+          <span>$</span> confidentiality — <span>Strictly maintained</span><br/>
+          <span>$</span> next_step &nbsp;&nbsp;&nbsp;&nbsp;— <span>Await my reply</span>
+        </p>
+      </div>
+
+      <div class="actions">
+        <a href="index.html" class="btn btn-primary">← Back to Website</a>
+        <a href="index.html#contact" class="btn btn-ghost">Send Another Message</a>
+      </div>
+
+      <div class="countdown-wrap">
+        <p class="countdown-text">Redirecting to homepage in <span id="countdown">10</span>s</p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <p class="footer-brand">&lt;<span>[YN]</span>/&gt;</p>
+      <p class="footer-copy">© <span id="year"></span> [Your Name]. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Countdown redirect
+    let seconds = 10;
+    const countEl = document.getElementById('countdown');
+
+    const timer = setInterval(() => {
+      seconds--;
+      if (countEl) countEl.textContent = seconds;
+      if (seconds <= 0) {
+        clearInterval(timer);
+        window.location.href = 'index.html';
+      }
+    }, 1000);
+  </script>
+
+</body>
+</html>
